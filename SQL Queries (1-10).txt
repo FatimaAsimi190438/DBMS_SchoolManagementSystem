@@ -1,0 +1,31 @@
+/* -------- SQL Queries --------- */
+
+Query 1:
+select stu_id, fname, lname, DOB, Reg_Date, Classname from student;
+
+Query 2:
+select mother.fname as "Mother Name", father.fname as "Spouse"  from parent mother, parent father where (mother.gender='F' AND father.spouse= mother.cnic); 
+
+Query 3:
+select g.name as “Guardian_Name”, s.fname as “Student_F_Name”, s.lname as “Student_L_Name”, g.relation from student s, guardian g where s.guardian_cnic = g.cnic;
+
+Query 4:
+select s.fname as "Student Name", mother.fname as "Mother Name", father.fname as "Father Name"  from parent mother, parent father, student s where (mother.gender='F' AND father.spouse= mother.cnic AND s.father_cnic = father.cnic);
+
+Query 5:
+select distinct s1.stu_id, s1.fname,s1.lname,s1.classname from student s1,student s2 where s1.fname != s2.fname and s1.lname = s2.lname and s1.father_cnic = s2.father_cnic order by s1.lname;
+
+Query 6:
+SELECT s.fname,s.lname, h.old_class, s.classname as New, s.reg_date from student s, class_history h where s.stu_id = h.stu_id and TIMESTAMP(s.reg_date,'YYYY-MON-DD') >= TIMESTAMP('2019-02-14','YYYY-MON-DD')  and TIMESTAMP(s.reg_date,'YYYY-MON-DD') <= TIMESTAMP('2020-11-14','YYYY-MON-DD');
+
+Query 7:
+SELECT fname,lname,classname, reg_date from student  where TIMESTAMP(reg_date,'YYYY-MON-DD') >= TIMESTAMP('2020-03-21','YYYY-MON-DD') and TIMESTAMP(reg_date,'YYYY-MON-DD') <= TIMESTAMP('2020-07-14','YYYY-MON-DD');
+
+Query 8:
+SELECT f.fname as "Parent Name", s.fname as "Student name", s.stu_id, s.classname, s.reg_date from student s, parent f where f.CNIC= s.FATHER_CNIC AND TIMESTAMP(reg_date,'YYYY-MON-DD') >= TIMESTAMP('2020-03-21','YYYY-MON-DD') and TIMESTAMP(reg_date,'YYYY-MON-DD') <= TIMESTAMP('2020-07-14','YYYY-MON-DD');
+
+Query 9:
+select p.fname as "Parent_Name", s.fname as "Student_Name", floor(DATEDIFF(s.reg_date,s.DOB)/365.25) as Child_Age, s.stu_id,s.classname from parent p,student s where p.cnic = s.father_cnic and (floor(DATEDIFF(s.reg_date,s.DOB)/365.25)) < 4;
+
+Query 10:
+select stu_id, old_class, new_class from class_history where stu_id= '19I-0505';
